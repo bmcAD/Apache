@@ -6,8 +6,9 @@
 -- To change this template use File | Settings | File Templates.
 --
 
-
-
+local _openZip = require('zip')
+local _fsSync = require('sync-fs')
+local _path = require('path')
 local _os = require('os')
 local _fs = require('fs')
 local _io = require('io')
@@ -58,26 +59,19 @@ end
 -- Zip functions
 ---------------------------------------------------------------------------------------------------------
 
-local function Extract(zipPath, zipFilename, destinationPath)
-    local zfile, err = unzip.open(zipPath .. zipFilename)
-    -- iterate through each file insize the zip file
-    for file in zfile:files() do
-        local currFile, err = zfile:open(file.filename)
-        local currFileContents = currFile:read("*a") -- read entire contents of current file
+local function unzip(zipPath, zipFilename, destinationPath)
+    local fd = _fsSync.open(zipPath .. zipFileName, "r", tonumber("644", 8))
+    local zip = _openZip(fd, _fsSync)
 
-        local binaryOutput = _io.open(destinationPath .. file.filename, "wb")
+    _fs.mkdirSync(destinationPath, "w")
 
-        -- write current file inside zip to a file outside zip
-        if(binaryOutput)then
-            binaryOutput:write(currFileContents)
-            binaryOutput:close()
-        end
-        currFile:close()
+    local entries = zip["entries"]
+    for k, v in pairs(entries) do
+        local target_file = _io.open(destinationPath .. k, "w")
+        target_file:write(zip.readfile(k))
+        target_file:close()
     end
-
-    zfile:close()
 end
-
 
 ---------------------------------------------------------------------------------------------------------
 -- Files functions
@@ -221,7 +215,7 @@ end
 pluginHelper.getOsArtchitecture = getOsArtchitecture
 pluginHelper.isSupportedWinOSVersion = isSupportedWinOSVersion
 pluginHelper.downloadFile = downloadFile
-pluginHelper.Extract = Extract
+pluginHelper.unzip = unzip
 pluginHelper.get_win_binary_path = get_win_binary_path
 pluginHelper.get_win_apache_properties = get_win_apache_properties
 pluginHelper.get_win_apache_root_directory = get_win_apache_root_directory
