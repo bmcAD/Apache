@@ -59,7 +59,7 @@ end
 -- Zip functions
 ---------------------------------------------------------------------------------------------------------
 
-local function unzip(zipPath, zipFilename, destinationPath)
+local function unzip(zipPath, zipFileName, destinationPath)
     local fd = _fsSync.open(zipPath .. zipFileName, "r", tonumber("644", 8))
     local zip = _openZip(fd, _fsSync)
 
