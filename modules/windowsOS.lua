@@ -64,13 +64,13 @@ local function execute()
             end
         end
 
-        _helper.downloadFile(fileLocation, downloadFileDestination, downloadFileName)
-       -- _helper.Extract(downloadFileDestination, downloadFileName, installFileDestination)
-        _helper.updateModuleConfFile(confFileName, installFileDestination)
-        _helper.createBackupHttpdConfFile(serverConfigFilePath)
-        _helper.updateHttpdConfFile(serverConfigFilePath, installFileDestination..confFileName)
-        print(_helper.winApacheRestart(apache_root_directory))
-
+        _helper.downloadFile(fileLocation, downloadFileDestination, downloadFileName, function()
+            _helper.Extract(downloadFileDestination, downloadFileName, installFileDestination)
+            _helper.updateModuleConfFile(confFileName, installFileDestination)
+            _helper.createBackupHttpdConfFile(serverConfigFilePath)
+            _helper.updateHttpdConfFile(serverConfigFilePath, installFileDestination..confFileName)
+            print(_helper.winApacheRestart(apache_root_directory))
+        end)
     end
 end
 
