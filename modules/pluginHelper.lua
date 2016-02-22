@@ -33,10 +33,10 @@ local function downloadFile(fileLocation, fileDestination, fileName, onEnd)
             f:write(chunk)
         end)
         res:on('end', function ()
-            local current=f:seek()    -- get current position
-            local size=f:seek("end")  -- get file size
-            f:seek("set", current)  -- restore position
-            print(size)
+            --local current=f:seek()    -- get current position
+            --local size=f:seek("end")  -- get file size
+            --f:seek("set", current)  -- restore position
+            --print(size)
             onEnd()
         end)
     end)
