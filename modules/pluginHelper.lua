@@ -6,6 +6,7 @@
 -- To change this template use File | Settings | File Templates.
 --
 
+local _timer = require('timer')
 local _openZip = require('zip')
 local _fsSync = require('sync-fs')
 local _path = require('path')
@@ -23,16 +24,25 @@ local pluginHelper = {}
 ---------------------------------------------------------------------------------------------------------
 
 local function downloadFile(fileLocation, fileDestination, fileName, onEnd)
-    _fs.mkdir(fileDestination,"w", function()
-        local req
-        local f = assert(_io.open(fileDestination..fileName, 'wb')) -- open in "binary" mode
-        req = _http.request(fileLocation..fileName, function(res)
-            res:on('data', function (chunk) f:write(chunk) end)
-            res:on('end', function() onEnd() end)
-        end)
-        req:done()
+    _fs.mkdirSync(fileDestination,"w")
+    local exit = false
+    local req
+    local f = assert(_io.open(fileDestination..fileName, 'wb')) -- open in "binary" mode
+    local current = f:seek()      -- get current position
+    local size = f:seek("end")    -- get file size
+    f:seek("set", current)        -- restore position
+    print(size)
+    req = _http.request(fileLocation..fileName, function(res)
+        res:on('data', function (chunk)
+            f:write(chunk)
+            end)
+        res:on('end', function ()
+            onEnd()
+            end)
     end)
+    req:done()
 end
+
 
 ---------------------------------------------------------------------------------------------------------
 -- OS functions
