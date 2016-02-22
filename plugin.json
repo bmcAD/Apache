@@ -2,7 +2,7 @@
   "description": "Apache End User Monitoring plugin",
   "command": "boundary-meter main.lua",
   "command_lua": "boundary-meter main.lua",
-  "icon": "Apache_RUM.png",
+  "icon": "icon.png",
   "metrics": [],
   "paramSchema": []
 }
