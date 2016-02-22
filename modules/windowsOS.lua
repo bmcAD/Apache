@@ -22,8 +22,8 @@ local serverConfigFilePath = nil
 
 
 local fileLocation = "http://vw-tlv-ad-qa18/Apache/"
-local downloadFileDestination = "C:/tmp/Apache/"
-local installFileDestination = "C:/tmp/Apache/"
+local downloadFileDestination = "C:\\tmp\\Apache\\"
+local installFileDestination = "C:\\tmp\\Apache_unzipped\\"
 
 
 local fileNameApache22_64bit = "Apache22Win64bit.zip"
@@ -62,15 +62,16 @@ local function execute()
             else
                 downloadFileName = fileNameApache22_32bit
             end
-        end
-
+    end
+    
         _helper.downloadFile(fileLocation, downloadFileDestination, downloadFileName, function()
-            _helper.Extract(downloadFileDestination, downloadFileName, installFileDestination)
-            _helper.updateModuleConfFile(confFileName, installFileDestination)
-            _helper.createBackupHttpdConfFile(serverConfigFilePath)
-            _helper.updateHttpdConfFile(serverConfigFilePath, installFileDestination..confFileName)
-            print(_helper.winApacheRestart(apache_root_directory))
+        _helper.unzip(downloadFileDestination, downloadFileName, installFileDestination)
+        _helper.updateModuleConfFile(confFileName, installFileDestination)
+        _helper.createBackupHttpdConfFile(serverConfigFilePath)
+        _helper.updateHttpdConfFile(serverConfigFilePath, installFileDestination..confFileName)
+        print(_helper.winApacheRestart(apache_root_directory))
         end)
+        print("finished")
     end
 end
 
