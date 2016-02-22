@@ -1,5 +1,5 @@
 {
-    "END_USER_LATENCY": {
+    "END_USER_METRICS": {
         "defaultAggregate": "avg",
         "defaultResolutionMS": 1000,
         "description": "Metric definition for the apache meter plugin",
