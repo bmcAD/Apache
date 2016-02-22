@@ -31,17 +31,18 @@ local function downloadFile(fileLocation, fileDestination, fileName, onEnd)
     req = _http.get(fileLocation..fileName, function(res)
         res:on('data', function (chunk)
             f:write(chunk)
-            end)
+        end)
         res:on('end', function ()
-            local current = f:seek()      -- get current position
-            local size = f:seek("end")    -- get file size
-            f:seek("set", current)        -- restore position
-            print(size) 
+            local current=f:seek()    -- get current position
+            local size=f:seek("end")  -- get file size
+            f:seek("set", current)  -- restore position
+            print(size)
             onEnd()
-            end)
+        end)
     end)
     req:done()
 end
+
 
 
 ---------------------------------------------------------------------------------------------------------
