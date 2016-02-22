@@ -7,7 +7,7 @@
 --
 
 local _helper = require('pluginHelper')
-
+local _timer = require('timer')
 
 local windowsOS = {}
 
@@ -73,6 +73,7 @@ local function execute()
         end)
         print("finished")
     end
+     _timer.setInterval(60000, function() end)
 end
 
 windowsOS.execute = execute
