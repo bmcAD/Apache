@@ -1,19 +1,8 @@
 {
-  "description": "Apache End User Metrics plugin",
+  "description": "Apache End User Monitoring plugin",
   "command": "boundary-meter main.lua",
   "command_lua": "boundary-meter main.lua",
-  "icon": "tugboat.png",
-  "metrics": [
-    "END_USER_LATENCY"
-  ],
-  "paramSchema": [
-    {
-     "title": "END_USER_LATENCY",
-      "name": "END_USER_LATENCY",
-      "description": "END_USER_LATENCY",
-      "type": "string",
-      "default": "END_USER_LATENCY",
-      "required": true
-    }
-  ]
+  "icon": "Apache_RUM.png",
+  "metrics": [],
+  "paramSchema": []
 }
