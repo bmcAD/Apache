@@ -27,22 +27,20 @@ local APACHE_MODULE_FILE_NAME = "BmcEuemApache%s.so"
 local JS_URL = "http://clm-aus-011019.bmc.com:880/static-resources/aeuem-10.1.0.js"
 
 local function execute()
-    print("win1")
     if (_helper.isSupportedWinOSVersion()) then
-        print("win2")
         apache_exe_path = _helper.get_win_binary_path()
         apache_root_directory = _helper.get_win_apache_root_directory(apache_exe_path)
         apacheProperties = _helper.get_win_apache_properties(apache_exe_path)
         serverArchitecture = apacheProperties["serverArchitecture"]
         serverConfigFile = apacheProperties["serverConfigFile"]
         serverConfigFilePath = apache_root_directory..serverConfigFile
-        print("win3")
+
         local apacheRelease = string.sub(apacheProperties["serverVersion"], 1, 3):gsub("%.", "")
         local downloadFileName = string.format(APACHE_MODULE_ARCHIVE_TEMPLATE, apacheRelease, serverArchitecture)
         local confFileName = string.format(APACHE_MODULE_CONF_TEMPLATE, apacheRelease)
         local apacheModuleFileName = string.format(APACHE_MODULE_FILE_NAME, apacheRelease)
         local authInfo = _framework.params["username"]..":".._framework.params["apiToken"]
-        print("win4")
+
         _helper.downloadFile(fileLocation, downloadFileDestination, downloadFileName, function()
         _helper.unzip(downloadFileDestination, downloadFileName, installFileDestination)
         _helper.updateModuleConfFile(confFileName, installFileDestination, apacheModuleFileName, JS_URL, authInfo)

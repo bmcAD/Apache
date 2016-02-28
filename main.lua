@@ -9,10 +9,9 @@
 local _windowsOS = require('windowsOS')
 local _linuxOS = require('linuxOS')
 local _timer = require('timer')
-p("main1")
+
 if jit.os == 'Windows' then
-    p("main2")
-    --_windowsOS.execute()
+    _windowsOS.execute()
 else
     _linuxOS.execute()
 end
