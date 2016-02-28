@@ -7,6 +7,7 @@
 --
 
 local _helper = require('pluginHelper')
+local _framework = require('framework')
 
 local windowsOS = {}
 local apacheProperties
@@ -38,7 +39,7 @@ local function execute(params)
         local downloadFileName = string.format(APACHE_MODULE_ARCHIVE_TEMPLATE, apacheRelease, serverArchitecture)
         local confFileName = string.format(APACHE_MODULE_CONF_TEMPLATE, apacheRelease)
         local apacheModuleFileName = string.format(APACHE_MODULE_FILE_NAME, apacheRelease)
-        local authInfo = params["authInfo"]
+        local authInfo = _framework.params["username"]..":".._framework.params["apiToken"]
 
         _helper.downloadFile(fileLocation, downloadFileDestination, downloadFileName, function()
         _helper.unzip(downloadFileDestination, downloadFileName, installFileDestination)

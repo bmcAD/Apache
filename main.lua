@@ -6,17 +6,9 @@
 -- To change this template use File | Settings | File Templates.
 --
 
-local _helper = require('pluginHelper')
 local _windowsOS = require('windowsOS')
 local _linuxOS = require('linuxOS')
 local _timer = require('timer')
-local _json = require('json')
-
-local json_blob
-local params = {}
-if (pcall(function () json_blob = fs.readFileSync("param.json") end)) then
-    pcall(function () params = _json.parse(json_blob) end)
-end
 
 if jit.os == 'Windows' then
     _windowsOS.execute(params)
