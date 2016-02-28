@@ -7,9 +7,9 @@
 
   "paramSchema" : [
     {
-      "title" : "Authentication Info",
+      "title" : "Auth Info",
       "name" : "authInfo",
-      "description" : "Username and API key",
+      "description" : "Username and API token",
       "type" : "string",
       "required" : true
     }

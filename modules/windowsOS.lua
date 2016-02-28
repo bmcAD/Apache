@@ -24,9 +24,8 @@ local APACHE_MODULE_ARCHIVE_TEMPLATE = "EuemApache%sWin%s.zip"
 local APACHE_MODULE_CONF_TEMPLATE = "bmc-aeuem-apache%s.conf"
 local APACHE_MODULE_FILE_NAME = "BmcEuemApache%s.so"
 local JS_URL = "http://clm-aus-011019.bmc.com:880/static-resources/aeuem-10.1.0.js"
-local AUTH_INFO = "nitsan_daniel@bmc.com:api.0a6d9584e2-9040"
 
-local function execute()
+local function execute(params)
     if (_helper.isSupportedWinOSVersion()) then
         apache_exe_path = _helper.get_win_binary_path()
         apache_root_directory = _helper.get_win_apache_root_directory(apache_exe_path)
@@ -39,16 +38,15 @@ local function execute()
         local downloadFileName = string.format(APACHE_MODULE_ARCHIVE_TEMPLATE, apacheRelease, serverArchitecture)
         local confFileName = string.format(APACHE_MODULE_CONF_TEMPLATE, apacheRelease)
         local apacheModuleFileName = string.format(APACHE_MODULE_FILE_NAME, apacheRelease)
+        local authInfo = params["authInfo"]
 
         _helper.downloadFile(fileLocation, downloadFileDestination, downloadFileName, function()
         _helper.unzip(downloadFileDestination, downloadFileName, installFileDestination)
-
-        _helper.updateModuleConfFile(confFileName, installFileDestination, apacheModuleFileName, JS_URL, AUTH_INFO)
+        _helper.updateModuleConfFile(confFileName, installFileDestination, apacheModuleFileName, JS_URL, authInfo)
         _helper.createBackupHttpdConfFile(serverConfigFilePath)
         _helper.updateHttpdConfFile(serverConfigFilePath, installFileDestination..confFileName)
         print(_helper.winApacheRestart(apache_root_directory))
         end)
-        print("finished")
     end
 end
 
