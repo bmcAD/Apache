@@ -85,10 +85,13 @@ end
 -- Files functions
 ---------------------------------------------------------------------------------------------------------
 
-local function updateModuleConfFile(confFileName, installDirectory)
+local function updateModuleConfFile(confFileName, installDirectory, moduleFileName, jsUrl, authInfo)
     local confFile = _io.open( installDirectory .. confFileName, "r" )
     local confStr = confFile:read( "*a" )
-    confStr = string.gsub( confStr, "C:/MyInstallDir/", installDirectory)
+    confStr = string.gsub(confStr, "${INSTALL_DIR}", installDirectory)
+    confStr = string.gsub(confStr, "${MODULEFILE}", moduleFileName)
+    confStr = string.gsub(confStr, "${JS_URL}", jsUrl)
+    confStr = string.gsub(confStr, "${AUTH_INFO}", authInfo)
     confFile:close()
 
     confFile = _io.open( installDirectory .. confFileName, "w" )

@@ -4,5 +4,14 @@
   "command_lua": "boundary-meter main.lua",
   "icon": "plugin_icon.png",
   "metrics": [],
-  "paramSchema": []
+
+  "paramSchema" : [
+    {
+      "title" : "Authentication Info",
+      "name" : "authInfo",
+      "description" : "Username and API key",
+      "type" : "string",
+      "required" : true
+    }
+  ]
 }
