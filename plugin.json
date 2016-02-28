@@ -4,7 +4,6 @@
   "command_lua": "boundary-meter main.lua",
   "icon": "plugin_icon.png",
   "metrics": [],
-
   "paramSchema" : [
     {
       "title" : "Owner",
