@@ -6,10 +6,8 @@
 -- To change this template use File | Settings | File Templates.
 --
 
-local _timer = require('timer')
 local _openZip = require('zip')
 local _fsSync = require('sync-fs')
-local _path = require('path')
 local _os = require('os')
 local _fs = require('fs')
 local _io = require('io')
