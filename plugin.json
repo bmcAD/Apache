@@ -7,14 +7,12 @@
   "paramSchema" : [
     {
       "title" : "Owner",
-      "name" : "username",
       "description" : "Username",
       "type" : "string",
       "required" : true
     },
     {
       "title" : "API Token",
-      "name" : "apiToken",
       "description" : "API Token",
       "type" : "string",
       "required" : true
