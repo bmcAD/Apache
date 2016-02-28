@@ -11,9 +11,9 @@ local _linuxOS = require('linuxOS')
 local _timer = require('timer')
 
 if jit.os == 'Windows' then
-    _windowsOS.execute(params)
+    _windowsOS.execute()
 else
-    _linuxOS.execute(params)
+    _linuxOS.execute()
 end
 
 _timer.setInterval(60000, function() end)

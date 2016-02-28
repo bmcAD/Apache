@@ -26,7 +26,7 @@ local APACHE_MODULE_CONF_TEMPLATE = "bmc-aeuem-apache%s.conf"
 local APACHE_MODULE_FILE_NAME = "BmcEuemApache%s.so"
 local JS_URL = "http://clm-aus-011019.bmc.com:880/static-resources/aeuem-10.1.0.js"
 
-local function execute(params)
+local function execute()
     if (_helper.isSupportedWinOSVersion()) then
         apache_exe_path = _helper.get_win_binary_path()
         apache_root_directory = _helper.get_win_apache_root_directory(apache_exe_path)
