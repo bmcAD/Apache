@@ -18,7 +18,7 @@ local serverArchitecture
 local serverConfigFile
 local serverConfigFilePath
 
-local fileLocation = "https://s3.amazonaws.com/apache-module/"
+local fileLocation = "http://vw-tlv-ad-qa18/Apache/"
 local downloadFileDestination = process.cwd().."\\apache_module_archive\\"
 local installFileDestination = process.cwd().."\\apache_module\\"
 
