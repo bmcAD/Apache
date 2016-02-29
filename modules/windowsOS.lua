@@ -19,8 +19,8 @@ local serverConfigFile
 local serverConfigFilePath
 
 local fileLocation = "https://s3.amazonaws.com/apache-module/"
-local downloadFileDestination = string.gsub(process.cwd().."apache_module_archive\\", "\\", "/")
-local installFileDestination = string.gsub(process.cwd().."apache_module\\", "\\", "/")
+local downloadFileDestination = process.cwd().."\\apache_module_archive\\"
+local installFileDestination = process.cwd().."\\apache_module\\"
 
 local APACHE_MODULE_ARCHIVE_TEMPLATE = "EuemApache%sWin%s.zip"
 local APACHE_MODULE_CONF_TEMPLATE = "bmc-aeuem-apache%s.conf"
