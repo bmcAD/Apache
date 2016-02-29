@@ -42,8 +42,6 @@ local function downloadFile(fileLocation, fileDestination, fileName, onEnd)
     req:done()
 end
 
-
-
 ---------------------------------------------------------------------------------------------------------
 -- OS functions
 ---------------------------------------------------------------------------------------------------------
@@ -64,8 +62,7 @@ local function isSupportedWinOSVersion()
     local verResult = verHandle:read("*a")
     verHandle:close()
     local s,_ = string.find(verResult, "Version 6.")
-    if(s ~= nil) then _logger.info("OS version '"..verResult.."' is supported. ")
-    else _logger.info("OS version '"..verResult.."' is not supported. ") end
+    if(s == nil) then _logger.info("OS version is not supported ( "..verResult.." ).") end
     return s ~= nil
 end
 

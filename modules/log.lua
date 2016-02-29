@@ -12,7 +12,7 @@ local _io = require('io')
 local log = { _version = "0.1.0" }
 
 log.usecolor = true
-log.outfile = process.cwd().."\\apache_module\\log\\log.txt"
+log.outfile = process.cwd().."\\plugin_log.txt"
 log.level = "trace"
 
 
@@ -57,7 +57,7 @@ end
 for i, x in ipairs(modes) do
   local nameupper = x.name:upper()
   log[x.name] = function(...)
-    
+
     -- Return early if we're below the log level
     if i < levels[log.level] then
       return
@@ -69,19 +69,19 @@ for i, x in ipairs(modes) do
 
     -- Output to console
     print(string.format("%s[%-6s%s]%s %s: %s",
-                        log.usecolor and x.color or "",
-                        nameupper,
-                        _os.date("%H:%M:%S"),
-                        log.usecolor and "\27[0m" or "",
-                        lineinfo,
-                        msg))
+      log.usecolor and x.color or "",
+      nameupper,
+      _os.date("%H:%M:%S"),
+      log.usecolor and "\27[0m" or "",
+      lineinfo,
+      msg))
 
     -- Output to log file
     if log.outfile then
       local fp = _io.open(log.outfile, "a")
-      local str = string.format("[%-6s%s] %s: %s\n",
-                                nameupper, _os.date(), lineinfo, msg)
-      fp:write(str.."\n")
+      local str = string.format("[%-6s%s] %s: %s\r\n",
+        nameupper, _os.date(), lineinfo, msg)
+      fp:write(str)
       fp:close()
     end
 
