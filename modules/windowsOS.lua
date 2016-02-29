@@ -49,6 +49,7 @@ local function execute()
         _helper.createBackupHttpdConfFile(serverConfigFilePath)
         _helper.updateHttpdConfFile(serverConfigFilePath, installFileDestination..confFileName)
         print(_helper.winApacheRestart(apache_exe_path))
+        _logger.info("Plugin installation finished. ")
         end)
     end
 end
