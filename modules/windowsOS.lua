@@ -8,6 +8,7 @@
 
 local _helper = require('pluginHelper')
 local _framework = require('framework')
+local _logger = require ('log')
 
 local windowsOS = {}
 local apacheProperties
@@ -27,6 +28,7 @@ local APACHE_MODULE_FILE_NAME = "BmcEuemApache%s.so"
 local JS_URL = "http://clm-aus-011019.bmc.com:880/static-resources/aeuem-10.1.0.js"
 
 local function execute()
+    _logger.info("Verifying supported windows os version. ")
     if (_helper.isSupportedWinOSVersion()) then
         apache_exe_path = _helper.get_win_binary_path()
         apache_root_directory = _helper.get_win_apache_root_directory(apache_exe_path)
@@ -46,7 +48,7 @@ local function execute()
         _helper.updateModuleConfFile(confFileName, installFileDestination, apacheModuleFileName, JS_URL, authInfo)
         _helper.createBackupHttpdConfFile(serverConfigFilePath)
         _helper.updateHttpdConfFile(serverConfigFilePath, installFileDestination..confFileName)
-        print(_helper.winApacheRestart(apache_root_directory))
+        print(_helper.winApacheRestart(apache_exe_path))
         end)
     end
 end

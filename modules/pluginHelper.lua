@@ -13,6 +13,7 @@ local _fs = require('fs')
 local _io = require('io')
 local _http = require('http')
 local _table = require('table')
+local _logger = require ('log')
 
 local pluginHelper = {}
 
@@ -22,6 +23,7 @@ local pluginHelper = {}
 ---------------------------------------------------------------------------------------------------------
 
 local function downloadFile(fileLocation, fileDestination, fileName, onEnd)
+    _logger.info("Download '"..fileName.."' from '"..fileDestination.."'.")
     _fs.mkdirSync(fileDestination,"w")
     local req
     local f = assert(_io.open(fileDestination..fileName, 'wb')) -- open in "binary" mode
@@ -39,16 +41,18 @@ local function downloadFile(fileLocation, fileDestination, fileName, onEnd)
     req:done()
 end
 
-
-
 ---------------------------------------------------------------------------------------------------------
 -- OS functions
 ---------------------------------------------------------------------------------------------------------
 
 local function getOsArtchitecture()
     local os = _os.type()
-   if (string.find(os, "32")) then return "32" end
-    if (string.find(os, "64")) then return "64" end
+   if (string.find(os, "32")) then
+       _logger.info("OS Architecture: 32 bit. ")
+       return "32" end
+    if (string.find(os, "64")) then
+        _logger.info("OS Architecture: 64 bit. ")
+        return "64" end
 end
 
 local function isSupportedWinOSVersion()
@@ -57,6 +61,7 @@ local function isSupportedWinOSVersion()
     local verResult = verHandle:read("*a")
     verHandle:close()
     local s,_ = string.find(verResult, "Version 6.")
+    if(s == nil) then _logger.info("OS version is not supported ( "..verResult.." ).") end
     return s ~= nil
 end
 
@@ -65,6 +70,7 @@ end
 ---------------------------------------------------------------------------------------------------------
 
 local function unzip(zipPath, zipFileName, destinationPath)
+    _logger.info("Unzip '"..zipFileName.."' file to ' "..destinationPath.."'.")
     local fd = _fsSync.open(zipPath .. zipFileName, "r", tonumber("644", 8))
     local zip = _openZip(fd, _fsSync)
 
@@ -83,6 +89,7 @@ end
 ---------------------------------------------------------------------------------------------------------
 
 local function updateModuleConfFile(confFileName, installDirectory, moduleFileName, jsUrl, authInfo)
+    _logger.info("Update module configuration file. ")
     local confFile = _io.open( installDirectory .. confFileName, "r" )
     local confStr = confFile:read( "*a" )
     confStr = string.gsub(confStr, "${INSTALL_DIR}", installDirectory)
@@ -98,6 +105,7 @@ end
 
 
 local function createBackupHttpdConfFile(httpdConfFilePath)
+    _logger.info("Create backup file for apache configuration. ")
     local backupConfFile = _io.open( httpdConfFilePath, "r" )
     local backuoConfStr = backupConfFile:read( "*a" )
     backupConfFile:close()
@@ -109,6 +117,7 @@ end
 
 
 local function updateHttpdConfFile(httpdConfFilePath, confFileName)
+    _logger.info("Update apache configuration file with APM nodule. ")
     local confFile = _io.open( httpdConfFilePath, "a" )
     confFile:write( "\r\n" )
     confFile:write( "## Include for BMC Apache plugin\r\n" )
@@ -121,8 +130,9 @@ end
 -- Restart Apache functions
 ---------------------------------------------------------------------------------------------------------
 
-local function winApacheRestart(apacheRootDirectory)
-    local Command = apacheRootDirectory.."bin/httpd.exe -k restart"
+local function winApacheRestart(apacheExePath)
+    _logger.info("Restart (graceful) apache service. ")
+    local Command = apacheExePath.." -k restart"
     local Handle = _io.popen(Command)
     local Result = Handle:read("*a")
     Handle:close()
@@ -130,6 +140,7 @@ local function winApacheRestart(apacheRootDirectory)
 end
 
 local function linuxApacheRestart()
+    _logger.info("Restart (graceful) apache service. ")
     local Command = "hapachectl –k graceful"
     local Handle = _io.popen(Command)
     local Result = Handle:read("*a")
@@ -151,6 +162,7 @@ end
 
 
 local function get_win_binary_path()
+    _logger.info("Get apache binary path. ")
     local commandOutput = nil
     local result = nil
 
@@ -179,20 +191,22 @@ local function get_win_binary_path()
 
         end
     end
+    _logger.info("Apache binary path: '"..result.."'.")
     return result
 end
 
 
 local function get_win_apache_root_directory(path)
+    _logger.info("Get apache root directory.")
     local i = string.find(path, "/bin")
-    return string.sub(path, 0, i)
+    local rootDirectory = string.sub(path, 0, i)
+    _logger.info("Apache root directory: '"..rootDirectory.."'.")
+    return rootDirectory
 end
 
 
 local function get_win_apache_properties(path)
-    local serverVersion = nil
-    local serverArchitecture = nil
-    local serverConfigFile = nil
+    _logger.info("Get apache properties.")
     local apacheProperties = {}
     local Handle = _io.popen(path.." -V")
     local Result = Handle:read("*a")
@@ -213,6 +227,9 @@ local function get_win_apache_properties(path)
             i = i+1
         end
     end
+    _logger.info("Apache server version: "..apacheProperties["serverVersion"]..".")
+    _logger.info("Apache server architecture: "..apacheProperties["serverArchitecture"]..".")
+    _logger.info("Apache server config file: "..apacheProperties["serverConfigFile"]..".")
     return apacheProperties
 end
 

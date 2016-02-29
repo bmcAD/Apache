@@ -9,10 +9,14 @@
 local _windowsOS = require('windowsOS')
 local _linuxOS = require('linuxOS')
 local _timer = require('timer')
+local _logger = require ('log')
 
+_logger.debug("Verifying operating system. ")
 if jit.os == 'Windows' then
+    _logger.info("OS: Windows. ")
     _windowsOS.execute()
 else
+    _logger.info("OS: Linux. ")
     _linuxOS.execute()
 end
 
