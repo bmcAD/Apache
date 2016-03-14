@@ -36,16 +36,15 @@ local function execute()
         serverArchitecture = apacheProperties["serverArchitecture"]
         serverConfigFile = apacheProperties["serverConfigFile"]
         serverConfigFilePath = apache_root_directory..serverConfigFile
-         _logger.info("get apache release. ")
+
         local apacheRelease = string.sub(apacheProperties["serverVersion"], 1, 3):gsub("%.", "")
-         _logger.info("download FileName. ")
         local downloadFileName = string.format(APACHE_MODULE_ARCHIVE_TEMPLATE, apacheRelease, serverArchitecture)
         local confFileName = string.format(APACHE_MODULE_CONF_TEMPLATE, apacheRelease)
-        _logger.info("apache Module FileName. ")
         local apacheModuleFileName = string.format(APACHE_MODULE_FILE_NAME, apacheRelease)
-        _logger.info("auth Info.. ")
-        local authInfo = _framework.params["username"]..":".._framework.params["apiToken"]
-        _logger.info("call to downloading.. ")
+        --local authInfo = _framework.params["username"]..":".._framework.params["apiToken"]
+       
+        local authInfo = "kavraham@bmc.com:api.8bdc17439c-9450"
+
         _helper.downloadFile(fileLocation, downloadFileDestination, downloadFileName, function()
         _helper.unzip(downloadFileDestination, downloadFileName, installFileDestination)
         _helper.updateModuleConfFile(confFileName, installFileDestination, apacheModuleFileName, JS_URL, authInfo)
