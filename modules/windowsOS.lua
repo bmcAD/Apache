@@ -43,7 +43,7 @@ local function execute()
         local apacheModuleFileName = string.format(APACHE_MODULE_FILE_NAME, apacheRelease)
         --local authInfo = _framework.params["username"]..":".._framework.params["apiToken"]
        
-        local authInfo = "kavraham@bmc.com:api.8bdc17439c-9450"
+        local authInfo = "nitsan_daniel@bmc.com:api.0a6d9584e2-9040"
 
         _helper.downloadFile(fileLocation, downloadFileDestination, downloadFileName, function()
         _helper.unzip(downloadFileDestination, downloadFileName, installFileDestination)
