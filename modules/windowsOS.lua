@@ -25,7 +25,7 @@ local installFileDestination = process.cwd().."\\apache_module\\"
 local APACHE_MODULE_ARCHIVE_TEMPLATE = "EuemApache%sWin%s.zip"
 local APACHE_MODULE_CONF_TEMPLATE = "bmc-aeuem-apache%s.conf"
 local APACHE_MODULE_FILE_NAME = "BmcEuemApache%s.so"
-local JS_URL = "http://clm-aus-011019.bmc.com:880/static-resources/aeuem-10.1.0.js"
+local JS_URL = "http://52.71.68.191:880/static-resources/aeuem-10.1.0.js"
 
 local function execute()
     _logger.info("Verifying supported windows os version. ")
