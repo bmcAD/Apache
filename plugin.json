@@ -3,6 +3,5 @@
   "command": "boundary-meter main.lua",
   "command_lua": "boundary-meter main.lua",
   "icon": "plugin_icon.png",
-  "metrics": [],
-  "paramSchema" : []
+  "metrics": []
 }
