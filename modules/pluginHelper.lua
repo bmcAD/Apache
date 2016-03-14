@@ -90,17 +90,17 @@ end
 
 local function updateModuleConfFile(confFileName, installDirectory, moduleFileName, jsUrl, authInfo)
     _logger.info("Update module configuration file. ")
-    local confFile = _io.open( installDirectory .. confFileName, "r" )
-    local confStr = confFile:read( "*a" )
-    confStr = string.gsub(confStr, "${MODULEFILE_PATH}", "\"" .. installDirectory .. moduleFileName .. "\"")
-    confStr = string.gsub(confStr, "${JS_URL}", jsUrl)
-    confStr = string.gsub(confStr, "${JS_STUB_PATH}", "\"" .. installDirectory .. "/js-stub-aeuem.txt\"")
-    confStr = string.gsub(confStr, "${AUTH_INFO}", authInfo)
-    confFile:close()
+    --local confFile = _io.open( installDirectory .. confFileName, "r" )
+    --local confStr = confFile:read( "*a" )
+    --confStr = string.gsub(confStr, "${MODULEFILE_PATH}", "\"" .. installDirectory .. moduleFileName .. "\"")
+    --confStr = string.gsub(confStr, "${JS_URL}", jsUrl)
+    --confStr = string.gsub(confStr, "${JS_STUB_PATH}", "\"" .. installDirectory .. "/js-stub-aeuem.txt\"")
+    --confStr = string.gsub(confStr, "${AUTH_INFO}", authInfo)
+    --confFile:close()
 
-    confFile = _io.open( installDirectory .. confFileName, "w" )
-    confFile:write( confStr )
-    confFile:close()
+    --confFile = _io.open( installDirectory .. confFileName, "w" )
+    --confFile:write( confStr )
+    --confFile:close()
 end
 
 
